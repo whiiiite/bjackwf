@@ -1,0 +1,149 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="props\cards\10 of clubs.png" />
+    <None Remove="props\cards\10 of diamonds.png" />
+    <None Remove="props\cards\10 of hearts.png" />
+    <None Remove="props\cards\10 of spades.png" />
+    <None Remove="props\cards\2 of clubs.png" />
+    <None Remove="props\cards\2 of diamonds.png" />
+    <None Remove="props\cards\2 of hearts.png" />
+    <None Remove="props\cards\2 of spades.png" />
+    <None Remove="props\cards\3 of clubs.png" />
+    <None Remove="props\cards\3 of diamonds.png" />
+    <None Remove="props\cards\3 of hearts.png" />
+    <None Remove="props\cards\3 of spades.png" />
+    <None Remove="props\cards\4 of clubs.png" />
+    <None Remove="props\cards\4 of diamonds.png" />
+    <None Remove="props\cards\4 of hearts.png" />
+    <None Remove="props\cards\4 of spades.png" />
+    <None Remove="props\cards\5 of clubs.png" />
+    <None Remove="props\cards\5 of diamonds.png" />
+    <None Remove="props\cards\5 of hearts.png" />
+    <None Remove="props\cards\5 of spades.png" />
+    <None Remove="props\cards\6 of clubs.png" />
+    <None Remove="props\cards\6 of diamonds.png" />
+    <None Remove="props\cards\6 of hearts.png" />
+    <None Remove="props\cards\6 of spades.png" />
+    <None Remove="props\cards\7 of clubs.png" />
+    <None Remove="props\cards\7 of diamonds.png" />
+    <None Remove="props\cards\7 of hearts.png" />
+    <None Remove="props\cards\7 of spades.png" />
+    <None Remove="props\cards\8 of clubs.png" />
+    <None Remove="props\cards\8 of diamonds.png" />
+    <None Remove="props\cards\8 of hearts.png" />
+    <None Remove="props\cards\8 of spades.png" />
+    <None Remove="props\cards\9 of clubs.png" />
+    <None Remove="props\cards\9 of diamonds.png" />
+    <None Remove="props\cards\9 of hearts.png" />
+    <None Remove="props\cards\9 of spades.png" />
+    <None Remove="props\cards\ace of clubs.png" />
+    <None Remove="props\cards\ace of diamonds.png" />
+    <None Remove="props\cards\ace of hearts.png" />
+    <None Remove="props\cards\ace of spades.png" />
+    <None Remove="props\cards\jack of clubs.png" />
+    <None Remove="props\cards\jack of diamonds.png" />
+    <None Remove="props\cards\jack of hearts.png" />
+    <None Remove="props\cards\jack of spades.png" />
+    <None Remove="props\cards\king of clubs.png" />
+    <None Remove="props\cards\king of diamonds.png" />
+    <None Remove="props\cards\king of hearts.png" />
+    <None Remove="props\cards\king of spades.png" />
+    <None Remove="props\cards\queen of clubs.png" />
+    <None Remove="props\cards\queen of diamonds.png" />
+    <None Remove="props\cards\queen of hearts.png" />
+    <None Remove="props\cards\queen of spades.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="props\cards\6 of clubs.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="props\cards\3 of clubs.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="props\cards\2 of spades.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="props\cards\10 of clubs.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="props\cards\10 of diamonds.png" />
+    <Resource Include="props\cards\10 of hearts.png" />
+    <Resource Include="props\cards\10 of spades.png" />
+    <Resource Include="props\cards\2 of clubs.png" />
+    <Resource Include="props\cards\2 of diamonds.png" />
+    <Resource Include="props\cards\2 of hearts.png" />
+    <Resource Include="props\cards\3 of diamonds.png" />
+    <Resource Include="props\cards\3 of hearts.png" />
+    <Resource Include="props\cards\3 of spades.png" />
+    <Resource Include="props\cards\4 of clubs.png" />
+    <Resource Include="props\cards\4 of diamonds.png" />
+    <Resource Include="props\cards\4 of hearts.png" />
+    <Resource Include="props\cards\4 of spades.png" />
+    <Resource Include="props\cards\5 of clubs.png" />
+    <Resource Include="props\cards\5 of diamonds.png" />
+    <Resource Include="props\cards\5 of hearts.png" />
+    <Resource Include="props\cards\5 of spades.png" />
+    <Resource Include="props\cards\6 of diamonds.png" />
+    <Resource Include="props\cards\6 of hearts.png" />
+    <Resource Include="props\cards\6 of spades.png" />
+    <Resource Include="props\cards\7 of clubs.png" />
+    <Resource Include="props\cards\7 of diamonds.png" />
+    <Resource Include="props\cards\7 of hearts.png" />
+    <Resource Include="props\cards\7 of spades.png" />
+    <Resource Include="props\cards\8 of clubs.png" />
+    <Resource Include="props\cards\8 of diamonds.png" />
+    <Resource Include="props\cards\8 of hearts.png" />
+    <Resource Include="props\cards\8 of spades.png" />
+    <Resource Include="props\cards\9 of clubs.png" />
+    <Resource Include="props\cards\9 of diamonds.png" />
+    <Resource Include="props\cards\9 of hearts.png" />
+    <Resource Include="props\cards\9 of spades.png" />
+    <Resource Include="props\cards\ace of clubs.png" />
+    <Resource Include="props\cards\ace of diamonds.png" />
+    <Resource Include="props\cards\ace of hearts.png" />
+    <Resource Include="props\cards\ace of spades.png" />
+    <Resource Include="props\cards\jack of clubs.png" />
+    <Resource Include="props\cards\jack of diamonds.png" />
+    <Resource Include="props\cards\jack of hearts.png" />
+    <Resource Include="props\cards\jack of spades.png" />
+    <Resource Include="props\cards\king of clubs.png" />
+    <Resource Include="props\cards\king of diamonds.png" />
+    <Resource Include="props\cards\king of hearts.png" />
+    <Resource Include="props\cards\king of spades.png" />
+    <Resource Include="props\cards\queen of clubs.png" />
+    <Resource Include="props\cards\queen of diamonds.png" />
+    <Resource Include="props\cards\queen of hearts.png" />
+    <Resource Include="props\cards\queen of spades.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
