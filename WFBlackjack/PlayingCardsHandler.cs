@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace WFBlackjack
 {
@@ -39,7 +40,8 @@ namespace WFBlackjack
                     {
                         Name = $"{i} of {suits[j]}",
                         ResourceName = $"_{i}_of_{suits[j]}",
-                        ValueOfCard = i
+                        ValueOfCard = i,
+                        IsReversed = false
                     });
                 }
             }
@@ -52,7 +54,8 @@ namespace WFBlackjack
                     {
                         Name = $"{posCapitilized[i]} of {suits[j]}",
                         ResourceName = $"{pos[i]}_of_{suits[j]}",
-                        ValueOfCard = 10
+                        ValueOfCard = 10,
+                        IsReversed = false
                     };
 
                     if (pos[i] == "ace")

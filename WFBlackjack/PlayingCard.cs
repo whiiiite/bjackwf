@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WFBlackjack
+﻿namespace WFBlackjack
 {
     public class PlayingCard
     {
         public string Name { get; set; }
 
         public string ResourceName { get; set; }
+
+        public bool IsReversed { get; set; }
 
         private int valueOfCard = 2;
         public int ValueOfCard 

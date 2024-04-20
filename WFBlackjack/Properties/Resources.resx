@@ -130,6 +130,9 @@
   <data name="ace_of_spades" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\props\cards\ace of spades.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="card_back_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\props\cards\card back red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="jack_of_clubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\props\cards\jack of clubs.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

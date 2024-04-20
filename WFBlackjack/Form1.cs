@@ -2,6 +2,8 @@ namespace WFBlackjack
 {
     public partial class Form1 : Form
     {
+        const int standartDelayMs = 300;
+
         List<PlayingCard> cards;
         List<PlayingCard> playerCards;
         List<PlayingCard> croupierCards;
@@ -56,11 +58,11 @@ namespace WFBlackjack
                 this.Invoke(async () =>
                 {
                     CroupHit();
-                    await Task.Delay(200);
+                    await Task.Delay(standartDelayMs);
                     Hit();
-                    await Task.Delay(200);
+                    await Task.Delay(standartDelayMs);
                     CroupHit();
-                    await Task.Delay(200);
+                    await Task.Delay(standartDelayMs);
                     Hit();
                 });
             });
@@ -118,10 +120,10 @@ namespace WFBlackjack
         private void CroupHit()
         {
             PlayingCard card = DealCard(croupierCards);
+            card.IsReversed = croupierCards.Count == 2;
             SetCroupierCard(card);
 
             int count = CountCards(croupierCards);
-            CroupierStatusLabel.Text = $"Croupier count: {count}";
             if (count == 21)
             {
                 BustOrWinLabel.Text = $"Croupier have 21. You bust down!";
@@ -132,6 +134,7 @@ namespace WFBlackjack
                 BustOrWinLabel.Text = $"Croupier have {count}. You won!";
                 NewRoundSwitchButtons();
             }
+            CroupierStatusLabel.Text = $"Croupier count: {count}";
 
             CenterAllLabels();
         }
@@ -162,10 +165,15 @@ namespace WFBlackjack
 
         private async Task CoupierHitsAfterStandAsync()
         {
+            PlayingCard secondCard = croupierCards[1];
+            ReverseReversedCard(secondCard);
+            await Task.Delay(standartDelayMs);
             int croupCount = CountCards(croupierCards);
             int playerCount = CountCards(playerCards);
 
-            if(croupCount > playerCount)
+            CroupierStatusLabel.Text = $"Croupier count: {croupCount}";
+
+            if (croupCount > playerCount)
             {
                 return;
             }
@@ -180,7 +188,7 @@ namespace WFBlackjack
                 }
 
                 CroupHit();
-                await Task.Delay(200);
+                await Task.Delay(standartDelayMs);
             }
         }
 
@@ -212,6 +220,14 @@ namespace WFBlackjack
             CenterAllLabels();
         }
 
+        private void ReverseReversedCard(PlayingCard card)
+        {
+            if (!card.IsReversed) return;
+
+            card.IsReversed = false;
+            croupCardPicBoxes[1].Image = PlayingCardsHandler.GetImageByName(card.ResourceName);
+        }
+
         private void ResetPictures()
         {
             foreach (var pic in croupCardPicBoxes)
@@ -227,6 +243,12 @@ namespace WFBlackjack
 
         private void SetCroupierCard(PlayingCard card)
         {
+            if (croupierCards.Count == 2)
+            {
+                croupCardPicBoxes[1].Image = PlayingCardsHandler.GetImageByName("card_back_red");
+                return;
+            }
+
             foreach (var c in croupCardPicBoxes)
             {
                 if (c.Image == null)
@@ -254,7 +276,7 @@ namespace WFBlackjack
             var card = cards.First();
             setOfCard.Add(card);
             cards.Remove(card);
-
+            
             return card;
         }
 
@@ -277,6 +299,11 @@ namespace WFBlackjack
 
             foreach (var card in cards)
             {
+                if(card.IsReversed && cards.Count == 2)
+                {
+                    continue;
+                }
+
                 if (card.ValueOfCard == 11)
                 {
                     aceCount++;
