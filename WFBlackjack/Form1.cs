@@ -115,19 +115,13 @@ namespace WFBlackjack
             CenterAllLabels();
         }
 
-        private async void CroupHit()
+        private void CroupHit()
         {
-            await Task.Run(() =>
-            {
-                this.Invoke(async () =>
-                {
-                    PlayingCard card = DealCard(croupierCards);
-                    SetCroupierCard(card);
-                    await Task.Delay(500);
-                });
-            });
+            PlayingCard card = DealCard(croupierCards);
+            SetCroupierCard(card);
 
             int count = CountCards(croupierCards);
+            CroupierStatusLabel.Text = $"Croupier count: {count}";
             if (count == 21)
             {
                 BustOrWinLabel.Text = $"Croupier have 21. You bust down!";
@@ -138,7 +132,6 @@ namespace WFBlackjack
                 BustOrWinLabel.Text = $"Croupier have {count}. You won!";
                 NewRoundSwitchButtons();
             }
-            CroupierStatusLabel.Text = $"Croupier count: {count}";
 
             CenterAllLabels();
         }
@@ -169,16 +162,26 @@ namespace WFBlackjack
 
         private async Task CoupierHitsAfterStandAsync()
         {
-            await Task.Run(async () =>
+            int croupCount = CountCards(croupierCards);
+            int playerCount = CountCards(playerCards);
+
+            if(croupCount > playerCount)
             {
-                int croupCount = CountCards(croupierCards);
-                while (croupCount < 17)
+                return;
+            }
+
+            while (croupCount < 17)
+            {
+                croupCount = CountCards(croupierCards);
+
+                if (croupCount > playerCount)
                 {
-                    croupCount = CountCards(croupierCards);
-                    CroupHit();
-                    await Task.Delay(200);
+                    return;
                 }
-            });
+
+                CroupHit();
+                await Task.Delay(200);
+            }
         }
 
         private void CompareCount()
