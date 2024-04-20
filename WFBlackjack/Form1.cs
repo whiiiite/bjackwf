@@ -6,12 +6,35 @@ namespace WFBlackjack
         List<PlayingCard> playerCards;
         List<PlayingCard> croupierCards;
 
+        List<PictureBox> croupCardPicBoxes;
+        List<PictureBox> playerCardPicBoxes;
+
         public Form1()
         {
             InitializeComponent();
             cards = PlayingCardsHandler.GetSetOfCards();
             playerCards = new List<PlayingCard>();
             croupierCards = new List<PlayingCard>();
+
+            croupCardPicBoxes = new List<PictureBox>
+            {
+                CroupCardPicBox1,
+                CroupCardPicBox2,
+                CroupCardPicBox3,
+                CroupCardPicBox4,
+                CroupCardPicBox5,
+                CroupCardPicBox6,
+            };
+
+            playerCardPicBoxes = new List<PictureBox>
+            {
+                PlayerCardPicBox1,
+                PlayerCardPicBox2,
+                PlayerCardPicBox3,
+                PlayerCardPicBox4,
+                PlayerCardPicBox5,
+                PlayerCardPicBox6,
+            };
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -20,25 +43,27 @@ namespace WFBlackjack
             StandBtn.Enabled = false;
             StartBtn.Enabled = true;
             BustOrWinLabel.Text = string.Empty;
+            CenterAllLabels();
         }
 
-        public static Bitmap GetImageByName(string imageName)
-        {
-            System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly();
-            string resourceName = asm.GetName().Name + ".Properties.Resources";
-            var rm = new System.Resources.ResourceManager(resourceName, asm);
-            return (Bitmap)rm.GetObject(imageName);
-
-        }
-
-        private void StartBtn_Click(object sender, EventArgs e)
+        private async void StartBtn_Click(object sender, EventArgs e)
         {
             InitRound();
             RoundSwitchButtons();
-            CroupHit();
-            Hit();
-            CroupHit();
-            Hit();
+
+            await Task.Run(() =>
+            {
+                this.Invoke(async () =>
+                {
+                    CroupHit();
+                    await Task.Delay(200);
+                    Hit();
+                    await Task.Delay(200);
+                    CroupHit();
+                    await Task.Delay(200);
+                    Hit();
+                });
+            });
 
             int croupCount = CountCards(croupierCards);
             int playerCount = CountCards(playerCards);
@@ -52,6 +77,8 @@ namespace WFBlackjack
                 BustOrWinLabel.Text = $"You have Blackjack. You won!";
                 NewRoundSwitchButtons();
             }
+
+            CenterAllLabels();
         }
 
         private void HitBtn_Click(object sender, EventArgs e)
@@ -59,17 +86,19 @@ namespace WFBlackjack
             Hit();
         }
 
-        private void StandBtn_Click(object sender, EventArgs e)
+        private async void StandBtn_Click(object sender, EventArgs e)
         {
             HitBtn.Enabled = false;
-            CoupierHitsAfterStand();
+            StandBtn.Enabled = false;
+            await CoupierHitsAfterStandAsync();
             CompareCount();
             NewRoundSwitchButtons();
         }
 
         private void Hit()
         {
-            DealCard(playerCards);
+            PlayingCard card = DealCard(playerCards);
+            SetPlayerCard(card);
             int count = CountCards(playerCards);
             if (count == 21)
             {
@@ -82,11 +111,22 @@ namespace WFBlackjack
                 NewRoundSwitchButtons();
             }
             PlayerStatusLabel.Text = $"Your count: {count}";
+
+            CenterAllLabels();
         }
 
-        private void CroupHit()
+        private async void CroupHit()
         {
-            DealCard(croupierCards);
+            await Task.Run(() =>
+            {
+                this.Invoke(async () =>
+                {
+                    PlayingCard card = DealCard(croupierCards);
+                    SetCroupierCard(card);
+                    await Task.Delay(500);
+                });
+            });
+
             int count = CountCards(croupierCards);
             if (count == 21)
             {
@@ -99,10 +139,13 @@ namespace WFBlackjack
                 NewRoundSwitchButtons();
             }
             CroupierStatusLabel.Text = $"Croupier count: {count}";
+
+            CenterAllLabels();
         }
 
         private void InitRound()
         {
+            ResetPictures();
             playerCards = new List<PlayingCard>();
             croupierCards = new List<PlayingCard>();
             cards = PlayingCardsHandler.GetSetOfCards();
@@ -124,14 +167,18 @@ namespace WFBlackjack
             StartBtn.Enabled = false;
         }
 
-        private void CoupierHitsAfterStand()
+        private async Task CoupierHitsAfterStandAsync()
         {
-            int croupCount = CountCards(croupierCards);
-            while (croupCount < 17)
+            await Task.Run(async () =>
             {
-                croupCount = CountCards(croupierCards);
-                CroupHit();
-            }
+                int croupCount = CountCards(croupierCards);
+                while (croupCount < 17)
+                {
+                    croupCount = CountCards(croupierCards);
+                    CroupHit();
+                    await Task.Delay(200);
+                }
+            });
         }
 
         private void CompareCount()
@@ -149,8 +196,8 @@ namespace WFBlackjack
             else if (p > c)
             {
                 BustOrWinLabel.Text = $"You have {p}. You won!";
-            } 
-            else if(p < c)
+            }
+            else if (p < c)
             {
                 BustOrWinLabel.Text = $"Croupier have {c}. You bust down!";
             }
@@ -158,13 +205,66 @@ namespace WFBlackjack
             {
                 BustOrWinLabel.Text = $"You and Croupier have the same count. Tie!";
             }
+
+            CenterAllLabels();
         }
 
-        private void DealCard(List<PlayingCard> setOfCard)
+        private void ResetPictures()
+        {
+            foreach (var pic in croupCardPicBoxes)
+            {
+                pic.Image = null;
+            }
+
+            foreach (var pic in playerCardPicBoxes)
+            {
+                pic.Image = null;
+            }
+        }
+
+        private void SetCroupierCard(PlayingCard card)
+        {
+            foreach (var c in croupCardPicBoxes)
+            {
+                if (c.Image == null)
+                {
+                    c.Image = PlayingCardsHandler.GetImageByName(card.ResourceName);
+                    return;
+                }
+            }
+        }
+
+        private void SetPlayerCard(PlayingCard card)
+        {
+            foreach (var c in playerCardPicBoxes)
+            {
+                if (c.Image == null)
+                {
+                    c.Image = PlayingCardsHandler.GetImageByName(card.ResourceName);
+                    return;
+                }
+            }
+        }
+
+        private PlayingCard DealCard(List<PlayingCard> setOfCard)
         {
             var card = cards.First();
             setOfCard.Add(card);
             cards.Remove(card);
+
+            return card;
+        }
+
+        private void CenterLabel(Label label)
+        {
+            label.Location = new Point((this.ClientSize.Width - label.Width) / 2, label.Top);
+        }
+
+        private void CenterAllLabels()
+        {
+            CenterLabel(BustOrWinLabel);
+            CenterLabel(CroupierStatusLabel);
+            CenterLabel(PlayerStatusLabel);
         }
 
         private int CountCards(List<PlayingCard> cards)
